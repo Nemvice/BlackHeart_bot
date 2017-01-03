@@ -1,5 +1,7 @@
-package com.akaryu.bot;
+package com.akaryu.bot.Core;
 
+import com.akaryu.bot.Objects.Configuration;
+import com.akaryu.bot.Tools.XMLReader;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
@@ -18,9 +20,11 @@ public class Main {
 
     private boolean stop = false;
 
-    Main(String token) {
+    Main() {
         try {
-            jda = new JDABuilder(AccountType.BOT).setToken(token).setBulkDeleteSplittingEnabled(false).buildBlocking();
+            Configuration base = XMLReader.readConfigXML("./resources/bot_auth.xml");
+            System.out.println(base.getToken());
+            jda = new JDABuilder(AccountType.BOT).setToken(base.getToken()).setBulkDeleteSplittingEnabled(false).buildBlocking();
         }catch (LoginException ex) {
             ex.printStackTrace();
             System.out.println("Une erreur est survenue veulliez verifier le token ou votre connection internet");
@@ -49,8 +53,8 @@ public class Main {
 
     public static void main(String[] args) {
         if (args.length < 1) {
-            System.out.println("Vieulliez indiquer le token du bot");
+            System.out.println("Veulliez indiquer le token du bot");
         }
-        new Main(args[0]);
+        new Main();
     }
 }
