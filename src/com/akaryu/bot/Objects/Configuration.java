@@ -5,15 +5,15 @@ package com.akaryu.bot.Objects;
  */
 public class Configuration {
     private String name;
+    private int discriminator;
     private String token;
     private String id;
-    private User owner;
 
-    public Configuration(String name, String token, String id, User owner) {
+    public Configuration(String name, int discriminator, String token, String id) {
         this.name = name;
+        this.discriminator = discriminator;
         this.token = token;
         this.id = id;
-        this.owner = owner;
     }
 
     public Configuration(String token){
@@ -24,15 +24,15 @@ public class Configuration {
         return name;
     }
 
+    public int getDiscriminator() {
+        return discriminator;
+    }
+
     public String getToken() {
         return token;
     }
 
     public String getId() {
         return id;
-    }
-
-    public User getOwner() {
-        return owner;
     }
 }
