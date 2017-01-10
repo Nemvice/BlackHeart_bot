@@ -43,15 +43,24 @@ public class Window extends JFrame {
                         configFile = chooser.getChooseFile();
                         connection = Connection.getInstance();
                         connection.connect(configFile);
+
+                        //change to disconnect button
+                        btnConnect.setActionCommand("disconnect");
+                        btnConnect.setText("Disconnect");
                     }catch (FileNotFoundException ex){
                         JOptionPane.showMessageDialog(btnConnect.getParent(),
                                 ex.getMessage(),
                                 "Error File",
                                 JOptionPane.ERROR_MESSAGE);
                     }
+                }else if("disconnect".equals(e.getActionCommand())){
+                    connection.disconnect();
+                    btnConnect.setActionCommand("connect");
+                    btnConnect.setText("Connect");
                 }
             }
         });
+
         this.getContentPane().add(btnConnect, BorderLayout.SOUTH);
 
         //Display the window.

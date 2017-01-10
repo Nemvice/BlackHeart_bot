@@ -19,7 +19,6 @@ public class Connection {
     private static Connection instance;
 
     private JDA jda;
-    private boolean stop = false;
 
     private Configuration configuration;
 
@@ -35,6 +34,7 @@ public class Connection {
         try {
             System.out.println(configuration.getToken());
             jda = new JDABuilder(AccountType.BOT).setToken(configuration.getToken()).setBulkDeleteSplittingEnabled(false).buildBlocking();
+            jda.addEventListener(new MessageListener(jda));
         }catch (LoginException ex) {
             ex.printStackTrace();
             System.out.println("Une erreur est survenue veuillez verifier le token ou votre connection internet");
@@ -51,13 +51,10 @@ public class Connection {
         System.out.println("Connecte avec: " + jda.getSelfUser().getName());
         int i;
         System.out.println("Le bot est autorisé sur " + (i = jda.getGuilds().size()) + " serveur" + (i > 1 ? "s" : ""));
-        while (!stop) {
-            Scanner scanner = new Scanner(System.in);
-            String cmd = scanner.next();
-            if (cmd.equalsIgnoreCase("stop")) {
-                jda.shutdown(true);
-                stop = true;
-            }
-        }
+
+    }
+
+    public void disconnect(){
+        jda.shutdown(true);
     }
 }
