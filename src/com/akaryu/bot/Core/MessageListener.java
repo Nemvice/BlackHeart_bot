@@ -77,7 +77,7 @@ public class MessageListener extends ListenerAdapter {
 
             System.out.printf("(%s)[%s]<%s>: %s\n", guild.getName(), textChannel.getName(), name, msg);
             System.out.printf("Member description " + member.getUser().getName() + " " + member.getUser().getDiscriminator());
-            channel.sendMessage(member.getUser().getAsMention()).queue();
+            //channel.sendMessage(member.getUser().getAsMention()).queue();
         }
         else if (event.isFromType(ChannelType.PRIVATE)) //If this message was sent to a PrivateChannel
         {
@@ -218,7 +218,9 @@ public class MessageListener extends ListenerAdapter {
             try
             {
                 //Note the fact that block returns the Message object!
-                Message sentMessage = channel.sendMessage("I blocked and will return the message!").block();
+                Message sentMessage = channel.sendMessage("I blocked and will return the message!").complete();
+                Message sentRatelimitMessage = channel.sendMessage("I expect rate limitation and know how to handle it!").complete(false);
+
                 System.out.println("Sent a message using blocking! Luckly I didn't get Ratelimited... MessageId: " + sentMessage.getId());
             }
             catch (RateLimitedException e)

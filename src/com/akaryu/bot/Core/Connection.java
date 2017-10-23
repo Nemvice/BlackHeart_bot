@@ -55,6 +55,6 @@ public class Connection {
     }
 
     public void disconnect(){
-        jda.shutdown(true);
+        jda.shutdown();
     }
 }
